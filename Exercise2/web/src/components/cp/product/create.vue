@@ -1,4 +1,5 @@
 <template>
+    <h1>Product</h1>
     <main>
         <button @click="visible=true">New 
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -238,6 +239,13 @@ const handleImageUpload = (event) => {
 </script>
 
 <style lang="scss" scoped>
+h1{
+    background-color:  rgb(108, 106, 106);
+    color: white;
+    width: 100%;
+    padding: 20px;
+    text-align: center;
+}
 #loader{
     width: 100%;
     display: flex;
@@ -416,7 +424,6 @@ main{
     width: 100%;
     text-align: right;
     padding: .3rem 1rem;
-    background-color:  rgb(108, 106, 106);
     display: flex;
     justify-content: flex-end;
     button{
@@ -431,7 +438,7 @@ main{
         transition: 300ms;
         cursor: pointer;
         &:hover{
-            background-color:  rgb(0, 217, 255);
+            background-color:  rgb(108, 106, 106);
             color: white;
         }
         svg{
