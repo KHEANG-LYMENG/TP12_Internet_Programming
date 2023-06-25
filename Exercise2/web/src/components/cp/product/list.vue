@@ -3,27 +3,25 @@
         <div id="loader" v-if="store.state.isLoading_cp">
             <span class="loader" ></span>
         </div>
-        <createProduct  v-if="!store.state.isLoading_cp" />
+        <createProduct />
         <table v-if="store.state.ProductData && !store.state.isLoading_cp">
             <tr>
                 <th>No</th>
                 <th>Name</th>
-                <th>Category</th>
                 <th>Sub Category</th>
                 <th>Owner</th>
-                <th>Created</th>
+                <th >Created</th>
                 <th style="text-align: right;">Action</th>
             </tr>
             <tr style="cursor: pointer;" v-for="(item, index) in store.state.ProductData" :key="item._id"  >
                 <td @click="popUp(item)">{{index+1}}</td>
                 <td @click="popUp(item)">{{ item.name }}</td>
-                <td @click="popUp(item)">{{ item.category?.name }}</td>
                 <td @click="popUp(item)">{{ item.subcategory?.name }}</td>
-                <td @click="popUp(item)" style="text-transform: uppercase;">{{ item.user?.username }}</td>
+                <td style="text-transform: uppercase;" @click="popUp(item)">{{ item.user?.username }}</td>
                 <td @click="popUp(item)" ><date-format :date="new Date(item.created )"  /></td>
                 <td style="text-align: right;">
                     <editProduct :data="item" />
-                    <deleteProduct :data="item"/>
+                    <deleteProduct :data="item" />
                 </td>
             </tr>
             
@@ -34,15 +32,14 @@
     <a-modal v-model:visible="visible" :title="`${detailObject.name } | ${dateFormation(new Date(detailObject.created))}`" @ok="handleOk">
         <p>Id: {{ detailObject._id }}</p>
         <p>Name: {{ detailObject.name }}</p>
-        <p>Category: {{ detailObject.category?.name }} | {{ detailObject.category?._id }}</p>
-        <p>SubCategory: {{ detailObject.subcategory?.name }} | {{ detailObject.subcategory?._id }}</p>
+        <p>Category: {{ detailObject.subcategory?.name }} | {{ detailObject.subcategory?._id }}</p>
+        <p>SubCategory: {{ detailObject.category?.name }} | {{ detailObject.category?._id }}</p>
         <p>User: {{ detailObject.user?.username }} | {{ detailObject.user?._id }}</p>
         <img style="width: 50%;" :src="`${store.state.fileUrl}/${detailObject.image}`" alt="">
         <a-divider orientation="left" style="font-weight: bold;">Price</a-divider>
         <table class="table_popup">
 
             <tr v-for="item in detailObject.prices">
-                <td>{{item._id}}</td>
                 <td>{{item.name}}</td>
                 <td>{{ item.price }} $</td>
             </tr>
@@ -59,9 +56,10 @@
 import dateFormation from '../../../util/dateFormation'
 import store from "@/store/index.js"
 import {ref} from 'vue'
-import createProduct from './create.vue';
-import editProduct from './edit.vue';
-import deleteProduct from './delete.vue';
+import createProduct from './create.vue'
+import deleteProduct from './delete.vue'
+import editProduct from './edit.vue'
+
 const visible =ref(false)
 const detailObject=ref({
     title:"Basic model"
@@ -90,7 +88,7 @@ const popUp=(obj)=>{
         display: inline-block;
         position: relative;
         border: 3px solid;
-        border-color:rgb(108, 106, 106) rgb(108, 106, 106) transparent transparent;
+        border-color:rgb(108, 106, 106) rgb(108, 106, 106)  transparent transparent;
         box-sizing: border-box;
         animation: rotation 1s linear infinite;
     }
@@ -144,7 +142,7 @@ const popUp=(obj)=>{
     display: flex;
     flex-direction: column;
     align-items: center;
-
+    gap: 1rem;
     overflow: auto;
     scrollbar-gutter: stable;
     @media print {
@@ -162,7 +160,6 @@ const popUp=(obj)=>{
         }
         th{
             background-color: rgb(108, 106, 106);
-            color: white;
         }
         th,td{
             padding: .2rem .4rem;
